@@ -24,9 +24,9 @@
   }
   .hero {
     position: absolute;
-    inset: -6%;
-    background: url("hero.jpg") center / cover no-repeat;
-    transform: translate3d(var(--px, 0px), var(--py, 0px), 0) scale(1.1);
+    inset: -10%;
+    background: url("hero.jpg") 38% center / cover no-repeat;
+    transform: translate3d(var(--px, 0px), var(--py, 0px), 0) scale(1.08);
     will-change: transform;
     transition: transform 0.15s ease-out;
     filter: saturate(1.05) contrast(1.02);
@@ -173,8 +173,6 @@
     <div class="vignette"></div>
     <div class="grain"></div>
     <div class="ui">
-      <div class="name">Nate Price</div>
-      <div class="role">Founder</div>
       <div class="chips">
         <span class="chip">Navy</span>
         <span class="chip">Maine</span>
@@ -193,8 +191,8 @@
       const r = stage.getBoundingClientRect();
       const nx = (e.clientX - r.left) / r.width - 0.5;
       const ny = (e.clientY - r.top) / r.height - 0.5;
-      tx = nx * -10;
-      ty = ny * -7;
+      tx = nx * -5;
+      ty = ny * -4;
     });
     stage.addEventListener('pointerleave', () => { tx = 0; ty = 0; });
     function tick() {
