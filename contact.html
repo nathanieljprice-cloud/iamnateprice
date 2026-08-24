@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Contact · Nate Price</title>
+<link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="page-bg" aria-hidden="true"></div>
+  <div class="moon-soft" aria-hidden="true"></div>
+  <div class="orb-drift warm" aria-hidden="true"></div>
+  <div class="orb-drift cool" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <nav class="site-nav" aria-label="Primary">
+    <a class="nav-mark" href="./index.html">Nate Price</a>
+    <ul class="nav-links">
+      <li><a href="./index.html">Home</a></li>
+      <li><a href="./about.html">About</a></li>
+      <li><a href="./work.html">Work</a></li>
+      <li><a href="./contact.html" aria-current="page">Contact</a></li>
+    </ul>
+  </nav>
+
+  <main class="page">
+    <div class="wrap wide">
+      <p class="kicker">Contact</p>
+      <h1>Say hello.</h1>
+      <p class="lede">
+        Founder notes, partnership threads, or a quiet question about Gambit or SteadyPulse.
+        Maine time zone. I read what lands.
+      </p>
+
+      <div class="contact-layout">
+        <form id="contact-form" class="contact-form" action="https://formsubmit.co/ajax/nathaniel.j.price@gmail.com" method="POST" novalidate>
+          <div class="field">
+            <label for="name">Name</label>
+            <input id="name" name="name" type="text" required autocomplete="name" placeholder="Your name" />
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" required autocomplete="email" placeholder="you@company.com" />
+          </div>
+          <div class="field">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" required placeholder="What should we talk about?"></textarea>
+          </div>
+          <button type="submit" class="submit-btn">Send</button>
+          <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+        </form>
+
+        <aside class="aside-links">
+          <h2>Or reach me directly</h2>
+          <p>Same inbox the form uses. LinkedIn for the shorter thread.</p>
+          <ul class="direct-list">
+            <li>
+              <a href="mailto:nathaniel.j.price@gmail.com">
+                <span class="tag">Email</span>
+                <span class="val">nathaniel.j.price@gmail.com</span>
+              </a>
+            </li>
+            <li>
+              <a href="https://www.linkedin.com/in/pricenj" target="_blank" rel="noopener noreferrer">
+                <span class="tag">LinkedIn</span>
+                <span class="val">linkedin.com/in/pricenj</span>
+              </a>
+            </li>
+          </ul>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">Built in Maine · EnkiLabs</footer>
+
+  <script>
+    document.getElementById('contact-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const btn = form.querySelector('.submit-btn');
+      const status = document.getElementById('form-status');
+      const original = btn.textContent;
+
+      btn.disabled = true;
+      btn.classList.remove('is-success', 'is-error');
+      btn.textContent = 'Sending…';
+      status.textContent = '';
+      status.className = 'form-status';
+
+      const payload = {
+        name: form.name.value.trim(),
+        email: form.email.value.trim(),
+        message: form.message.value.trim(),
+        _subject: 'iamnateprice.com contact',
+        _template: 'table',
+        _replyto: form.email.value.trim()
+      };
+
+      try {
+        const res = await fetch('https://formsubmit.co/ajax/nathaniel.j.price@gmail.com', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) throw new Error(data.message || ('HTTP ' + res.status));
+
+        btn.textContent = 'Got it. Talk soon';
+        btn.classList.add('is-success');
+        status.textContent = 'Message sent.';
+        status.classList.add('ok');
+        form.reset();
+        setTimeout(() => {
+          btn.textContent = original;
+          btn.classList.remove('is-success');
+          btn.disabled = false;
+          status.textContent = '';
+          status.className = 'form-status';
+        }, 4000);
+      } catch (err) {
+        console.error(err);
+        btn.textContent = 'Something went wrong';
+        btn.classList.add('is-error');
+        status.textContent = 'Could not send. Try again or use email.';
+        status.classList.add('err');
+        btn.disabled = false;
+        setTimeout(() => {
+          btn.textContent = original;
+          btn.classList.remove('is-error');
+        }, 3500);
+      }
+    });
+  </script>
+</body>
+</html>

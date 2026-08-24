@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Nate Price</title>
+<link rel="stylesheet" href="./styles.css" />
+<style>
+  .stage {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    cursor: crosshair;
+  }
+  .hero {
+    position: absolute;
+    inset: -6%;
+    background: url("./hero.jpg") center / cover no-repeat;
+    transform: translate3d(var(--px, 0px), var(--py, 0px), 0) scale(1.1);
+    will-change: transform;
+    transition: transform 0.15s ease-out;
+    filter: saturate(1.05) contrast(1.02);
+  }
+  .vignette {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.45) 100%),
+      linear-gradient(to top, rgba(0,0,0,0.35), transparent 30%);
+  }
+  .moon-glow {
+    position: absolute;
+    width: 22vw;
+    height: 22vw;
+    top: 8%;
+    right: 14%;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.22), transparent 70%);
+    animation: breathe 7s ease-in-out infinite;
+    pointer-events: none;
+    mix-blend-mode: screen;
+  }
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    filter: blur(0.2px);
+    mix-blend-mode: screen;
+  }
+  .orb.gambit {
+    width: 11vw;
+    height: 11vw;
+    left: 22%;
+    top: 28%;
+    background:
+      radial-gradient(circle at 35% 35%, rgba(255,220,160,0.9), var(--amber) 35%, transparent 70%);
+    box-shadow:
+      0 0 40px var(--amber-soft),
+      0 0 80px rgba(232,162,58,0.25);
+    animation: driftA 9s ease-in-out infinite, pulse 4.5s ease-in-out infinite;
+  }
+  .orb.steady {
+    width: 9.5vw;
+    height: 9.5vw;
+    right: 24%;
+    top: 34%;
+    background:
+      radial-gradient(circle at 40% 30%, rgba(200,240,255,0.95), var(--blue) 40%, transparent 72%);
+    box-shadow:
+      0 0 36px var(--blue-soft),
+      0 0 70px rgba(94,200,255,0.22);
+    animation: driftB 11s ease-in-out infinite, pulse 5.2s ease-in-out infinite 0.6s;
+  }
+  .orb::after {
+    content: "";
+    position: absolute;
+    inset: -18%;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.18);
+    animation: spin 28s linear infinite;
+  }
+  .orb.steady::after { animation-duration: 36s; animation-direction: reverse; }
+  .streak {
+    position: absolute;
+    left: 10%;
+    top: 58%;
+    width: 55vw;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--amber-soft), rgba(255,210,140,0.7), transparent);
+    filter: blur(1px);
+    transform-origin: left center;
+    animation: streak 6.5s ease-in-out infinite;
+    pointer-events: none;
+    opacity: 0.75;
+  }
+  .ui {
+    position: absolute;
+    left: 5.5vw;
+    bottom: 7.5vh;
+    z-index: 5;
+    pointer-events: none;
+  }
+  .ui .name {
+    font-family: var(--serif);
+    font-size: clamp(1.6rem, 3.2vw, 2.8rem);
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    text-shadow: 0 2px 24px rgba(0,0,0,0.6);
+  }
+  .ui .role {
+    margin-top: 0.35rem;
+    font-family: var(--sans);
+    font-size: 0.78rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: rgba(242,239,232,0.72);
+  }
+  .ui .chips { pointer-events: none; }
+  .hint {
+    position: absolute;
+    right: 4.5vw;
+    bottom: 7.5vh;
+    z-index: 5;
+    font-family: var(--sans);
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(242,239,232,0.45);
+    pointer-events: none;
+  }
+  .stage .grain {
+    position: absolute;
+    z-index: 3;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @keyframes streak {
+    0%, 100% { opacity: 0.25; transform: scaleX(0.85) translateX(0); }
+    50% { opacity: 0.85; transform: scaleX(1.05) translateX(2vw); }
+  }
+  @media (max-width: 700px) {
+    .orb.gambit, .orb.steady { width: 18vw; height: 18vw; }
+  }
+</style>
+</head>
+<body class="hero-page">
+  <nav class="site-nav" aria-label="Primary">
+    <a class="nav-mark" href="./index.html">Nate Price</a>
+    <ul class="nav-links">
+      <li><a href="./index.html" aria-current="page">Home</a></li>
+      <li><a href="./about.html">About</a></li>
+      <li><a href="./work.html">Work</a></li>
+      <li><a href="./contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="stage" id="stage">
+    <div class="hero" id="hero"></div>
+    <div class="moon-glow"></div>
+    <div class="orb gambit" aria-hidden="true"></div>
+    <div class="orb steady" aria-hidden="true"></div>
+    <div class="streak" aria-hidden="true"></div>
+    <div class="vignette"></div>
+    <div class="grain"></div>
+    <div class="ui">
+      <div class="name">Nate Price</div>
+      <div class="role">Founder</div>
+      <div class="chips">
+        <span class="chip">Navy</span>
+        <span class="chip">Maine</span>
+        <span class="chip">EnkiLabs</span>
+      </div>
+    </div>
+    <div class="hint">Move · locked hero</div>
+    <footer class="site-footer overlay">Built in Maine · EnkiLabs</footer>
+  </div>
+
+  <script>
+    const stage = document.getElementById('stage');
+    const hero = document.getElementById('hero');
+    let tx = 0, ty = 0, cx = 0, cy = 0;
+    stage.addEventListener('pointermove', (e) => {
+      const r = stage.getBoundingClientRect();
+      const nx = (e.clientX - r.left) / r.width - 0.5;
+      const ny = (e.clientY - r.top) / r.height - 0.5;
+      tx = nx * -10;
+      ty = ny * -7;
+    });
+    stage.addEventListener('pointerleave', () => { tx = 0; ty = 0; });
+    function tick() {
+      cx += (tx - cx) * 0.06;
+      cy += (ty - cy) * 0.06;
+      hero.style.setProperty('--px', cx.toFixed(2) + 'px');
+      hero.style.setProperty('--py', cy.toFixed(2) + 'px');
+      requestAnimationFrame(tick);
+    }
+    tick();
+  </script>
+</body>
+</html>
