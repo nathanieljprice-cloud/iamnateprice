@@ -131,6 +131,7 @@ img { max-width: 100%; display: block; }
 }
 
 .orb-drift {
+  display: none; /* cleanup: no functionless moons */
   position: fixed;
   border-radius: 50%;
   pointer-events: none;
