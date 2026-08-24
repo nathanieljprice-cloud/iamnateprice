@@ -78,6 +78,49 @@
     position: absolute;
     z-index: 3;
   }
+
+  @media (max-width: 720px) {
+    .site-nav {
+      padding: 0.85rem 4vw;
+      flex-wrap: wrap;
+      gap: 0.45rem 1rem;
+      background: linear-gradient(to bottom, rgba(5,7,11,0.85), transparent);
+    }
+    .nav-links {
+      width: 100%;
+      flex-wrap: wrap;
+      gap: 0.55rem 0.9rem;
+      font-size: 0.55rem;
+      letter-spacing: 0.14em;
+    }
+    .stage {
+      height: 100dvh;
+      min-height: 100svh;
+      cursor: default;
+    }
+    .hero {
+      inset: -2%;
+      /* keep silhouette + lighthouse readable on phone */
+      background-position: 55% 40%;
+      transform: none !important;
+      scale: none;
+      filter: saturate(1.04) contrast(1.03);
+    }
+    .ui {
+      left: 4vw;
+      right: 4vw;
+      bottom: max(5.5rem, 10dvh);
+    }
+    .ui .chips { gap: 0.4rem; }
+    .hint { display: none; }
+    .site-footer {
+      left: 0;
+      right: 0;
+      bottom: 1.2rem;
+      text-align: center;
+      font-size: 0.58rem;
+    }
+  }
 </style>
 </head>
 <body class="hero-page">
@@ -109,23 +152,27 @@
   <script>
     const stage = document.getElementById('stage');
     const hero = document.getElementById('hero');
-    let tx = 0, ty = 0, cx = 0, cy = 0;
-    stage.addEventListener('pointermove', (e) => {
-      const r = stage.getBoundingClientRect();
-      const nx = (e.clientX - r.left) / r.width - 0.5;
-      const ny = (e.clientY - r.top) / r.height - 0.5;
-      tx = nx * -3;
-      ty = ny * -2;
-    });
-    stage.addEventListener('pointerleave', () => { tx = 0; ty = 0; });
-    function tick() {
-      cx += (tx - cx) * 0.06;
-      cy += (ty - cy) * 0.06;
-      hero.style.setProperty('--px', cx.toFixed(2) + 'px');
-      hero.style.setProperty('--py', cy.toFixed(2) + 'px');
-      requestAnimationFrame(tick);
+    const finePointer = window.matchMedia('(pointer: fine) and (min-width: 721px)').matches;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (finePointer && !reduceMotion) {
+      let tx = 0, ty = 0, cx = 0, cy = 0;
+      stage.addEventListener('pointermove', (e) => {
+        const r = stage.getBoundingClientRect();
+        const nx = (e.clientX - r.left) / r.width - 0.5;
+        const ny = (e.clientY - r.top) / r.height - 0.5;
+        tx = nx * -3;
+        ty = ny * -2;
+      });
+      stage.addEventListener('pointerleave', () => { tx = 0; ty = 0; });
+      function tick() {
+        cx += (tx - cx) * 0.06;
+        cy += (ty - cy) * 0.06;
+        hero.style.setProperty('--px', cx.toFixed(2) + 'px');
+        hero.style.setProperty('--py', cy.toFixed(2) + 'px');
+        requestAnimationFrame(tick);
+      }
+      tick();
     }
-    tick();
   </script>
 </body>
 </html>
