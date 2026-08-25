@@ -244,54 +244,6 @@ h1 {
   color: rgba(242, 239, 232, 0.85);
 }
 
-/* - Silhouette panel (About) - */
-.silhouette-panel {
-  margin-top: 3rem;
-  position: relative;
-  height: clamp(220px, 32vw, 340px);
-  border-radius: 1.25rem;
-  overflow: hidden;
-  border: 1px solid var(--line);
-  background:
-    linear-gradient(120deg, rgba(0, 0, 0, 0.35), transparent 40%),
-    radial-gradient(ellipse at 70% 40%, rgba(255, 255, 255, 0.08), transparent 50%),
-    linear-gradient(180deg, #0a1018 0%, #05070b 100%);
-}
-
-.silhouette-panel::before {
-  content: "";
-  position: absolute;
-  left: 12%;
-  bottom: 0;
-  width: 28%;
-  height: 78%;
-  background: linear-gradient(180deg, transparent 0%, rgba(5, 7, 11, 0.2) 20%, #020308 100%);
-  clip-path: polygon(35% 0%, 65% 0%, 85% 100%, 15% 100%);
-  opacity: 0.9;
-  filter: blur(0.5px);
-}
-
-.silhouette-panel::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse at 75% 30%, rgba(255, 255, 255, 0.12), transparent 40%),
-    linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent 40%);
-  pointer-events: none;
-}
-
-.sil-caption {
-  position: absolute;
-  left: 1.25rem;
-  bottom: 1rem;
-  z-index: 2;
-  font-size: 0.65rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--bone-faint);
-}
-
 /* - Work cards - */
 .venture-grid {
   display: grid;
@@ -346,14 +298,6 @@ h1 {
   background: radial-gradient(circle, var(--blue-soft), transparent 70%);
 }
 
-.venture .label {
-  font-size: 0.65rem;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  color: var(--bone-faint);
-  margin-bottom: 0.65rem;
-}
-
 .venture h2 {
   font-family: var(--serif);
   font-weight: 500;
@@ -386,13 +330,6 @@ h1 {
 
 .venture.warm .link:hover { border-color: var(--amber); color: #f0c57a; }
 .venture.cool .link:hover { border-color: var(--blue); color: #9fdcff; }
-
-.note {
-  margin-top: 2rem;
-  font-size: 0.85rem;
-  color: var(--bone-faint);
-  max-width: 36rem;
-}
 
 /* - Contact - */
 .contact-layout {
@@ -672,12 +609,6 @@ body.hero-page .site-nav {
   .chip {
     font-size: 0.6rem;
     padding: 0.35rem 0.65rem;
-  }
-
-  .silhouette-panel {
-    height: 200px;
-    margin-top: 2rem;
-    border-radius: 1rem;
   }
 
   .venture {
