@@ -13,6 +13,11 @@
   --line: rgba(255, 255, 255, 0.14);
   --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
   --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --gutter: clamp(1.25rem, 4.5vw, 4rem);
+  --chrome: 90rem;
+  --frame: 58rem;
+  --frame-wide: 68rem;
+  --edge: max(var(--gutter), calc((100vw - var(--chrome)) / 2));
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -52,7 +57,7 @@ img { max-width: 100%; display: block; }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1.15rem 4.5vw;
+  padding: 1.15rem var(--edge);
   pointer-events: none;
   font-family: var(--sans);
 }
@@ -180,12 +185,12 @@ img { max-width: 100%; display: block; }
   position: relative;
   z-index: 5;
   isolation: isolate;
-  width: min(920px, 90vw);
+  width: min(var(--frame), calc(100% - 2 * var(--gutter)));
   margin: 0 auto;
   padding-bottom: 5rem;
 }
 
-.wrap.wide { width: min(1040px, 92vw); }
+.wrap.wide { width: min(var(--frame-wide), calc(100% - 2 * var(--gutter))); }
 
 .kicker {
   font-family: var(--sans);
@@ -489,7 +494,7 @@ h1 {
 .site-footer {
   position: relative;
   z-index: 5;
-  padding: 2rem 4.5vw 2.5rem;
+  padding: 2rem var(--edge) 2.5rem;
   font-family: var(--sans);
   font-size: 0.65rem;
   letter-spacing: 0.2em;
@@ -541,6 +546,51 @@ body.hero-page .site-nav {
 @keyframes grain {
   0%, 100% { transform: translate(0, 0); }
   50% { transform: translate(-1%, 1%); }
+}
+
+@media (min-width: 1400px) {
+  :root {
+    --frame: 66rem;
+    --frame-wide: 80rem;
+  }
+
+  .page {
+    padding: 7.25rem 0 0;
+  }
+
+  h1 {
+    font-size: clamp(2.15rem, 2.3vw, 3.45rem);
+  }
+
+  .moon-soft {
+    width: min(22vw, 440px);
+    height: min(22vw, 440px);
+  }
+}
+
+@media (min-width: 1900px) {
+  :root {
+    --frame: 70rem;
+    --frame-wide: 84rem;
+  }
+
+  .page {
+    padding: 8rem 0 0;
+  }
+
+  .wrap,
+  .wrap.wide {
+    padding-bottom: 6rem;
+  }
+
+  .lede {
+    font-size: 1.1rem;
+    max-width: 42rem;
+  }
+
+  .prose {
+    max-width: 40rem;
+  }
 }
 
 @media (max-width: 900px) {
