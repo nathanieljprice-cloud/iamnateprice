@@ -8,25 +8,26 @@
 <style>
 
   /* critical nav so preview never ships unstyled chrome */
-  .site-nav{position:fixed;top:0;left:0;right:0;z-index:40;display:flex;align-items:center;justify-content:space-between;padding:1.15rem 4.5vw;pointer-events:none;font-family:ui-sans-serif,system-ui,sans-serif}
+  :root{--gutter:clamp(1.25rem,4.5vw,4rem);--chrome:90rem;--edge:max(var(--gutter),calc((100vw - var(--chrome)) / 2))}
+  .site-nav{position:fixed;top:0;left:0;right:0;z-index:40;display:flex;align-items:center;justify-content:space-between;padding:1.15rem var(--edge);pointer-events:none;font-family:ui-sans-serif,system-ui,sans-serif}
   .site-nav a{pointer-events:auto;color:rgba(242,239,232,.85);text-decoration:none}
   .nav-mark{font-family:Georgia,serif;font-size:1.05rem;color:#f2efe8;text-shadow:0 1px 18px rgba(0,0,0,.55)}
   .nav-links{display:flex;gap:1.5rem;list-style:none;margin:0;padding:0;font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(242,239,232,.45)}
   .nav-links a:hover,.nav-links a[aria-current=page]{color:#f2efe8}
-  .site-footer{position:absolute;left:4.5vw;bottom:2.2vh;z-index:5;font-family:ui-sans-serif,system-ui,sans-serif;font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(242,239,232,.4)}
+  .site-footer{position:absolute;left:0;right:0;bottom:0;z-index:6;text-align:center;font-family:ui-sans-serif,system-ui,sans-serif;font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(242,239,232,.4)}
 
   .stage {
     position: relative;
-    width: 100vw;
+    width: 100%;
     height: 100vh;
     overflow: hidden;
     cursor: crosshair;
   }
   .hero {
     position: absolute;
-    inset: -12%;
-    background: url("hero.jpg?v=20260825") 32% center / cover no-repeat;
-    transform: translate3d(var(--px, 0px), var(--py, 0px), 0) scale(1.06);
+    inset: -5%;
+    background: url("hero.jpg?v=20260826") 42% 42% / cover no-repeat;
+    transform: translate3d(var(--px, 0px), var(--py, 0px), 0) scale(1.03);
     will-change: transform;
     transition: transform 0.15s ease-out;
     filter: saturate(1.05) contrast(1.02);
@@ -36,47 +37,53 @@
     inset: 0;
     pointer-events: none;
     background:
-      radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.45) 100%),
-      linear-gradient(to top, rgba(0,0,0,0.35), transparent 30%);
+      radial-gradient(ellipse at center, transparent 42%, rgba(0,0,0,0.5) 100%),
+      linear-gradient(to top, rgba(5,7,11,0.55) 0%, transparent 28%);
+  }
+  .hero-scrim {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: min(38vw, 34rem);
+    height: min(40vh, 22rem);
+    z-index: 4;
+    pointer-events: none;
+    background: radial-gradient(ellipse 90% 85% at 12% 78%, rgba(5,7,11,0.72), transparent 72%);
   }
   .ui {
     position: absolute;
-    left: 5.5vw;
+    left: var(--edge);
     bottom: 7.5vh;
     z-index: 5;
     pointer-events: none;
-  }
-  .ui .name {
-    font-family: var(--serif);
-    font-size: clamp(1.6rem, 3.2vw, 2.8rem);
-    font-weight: 500;
-    letter-spacing: 0.02em;
-    text-shadow: 0 2px 24px rgba(0,0,0,0.6);
-  }
-  .ui .role {
-    margin-top: 0.35rem;
-    font-family: var(--sans);
-    font-size: 0.78rem;
-    letter-spacing: 0.28em;
-    text-transform: uppercase;
-    color: rgba(242,239,232,0.72);
   }
   .ui .chips { pointer-events: none; }
-  .hint {
-    position: absolute;
-    right: 4.5vw;
-    bottom: 7.5vh;
-    z-index: 5;
-    font-family: var(--sans);
-    font-size: 0.7rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: rgba(242,239,232,0.45);
-    pointer-events: none;
-  }
   .stage .grain {
     position: absolute;
     z-index: 3;
+  }
+
+  @media (min-width: 1400px) {
+    .hero {
+      inset: -4%;
+      background-position: 43% 44%;
+    }
+  }
+
+  @media (min-width: 1900px) {
+    .hero {
+      inset: -3%;
+      background-position: 45% 45%;
+      transform: translate3d(var(--px, 0px), var(--py, 0px), 0) scale(1.025);
+    }
+  }
+
+  @media (min-aspect-ratio: 2.1/1) {
+    .hero {
+      inset: 0;
+      background-size: auto 112%;
+      background-position: 48% 46%;
+    }
   }
 
   @media (max-width: 720px) {
@@ -102,16 +109,22 @@
       inset: -2%;
       /* keep silhouette + lighthouse readable on phone */
       background-position: 55% 40%;
+      background-size: cover;
       transform: none !important;
       filter: saturate(1.04) contrast(1.03);
     }
+    .vignette {
+      background:
+        radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.45) 100%),
+        linear-gradient(to top, rgba(0,0,0,0.35), transparent 30%);
+    }
+    .hero-scrim { display: none; }
     .ui {
       left: 4vw;
       right: 4vw;
       bottom: max(5.5rem, 10dvh);
     }
     .ui .chips { gap: 0.4rem; }
-    .hint { display: none; }
     .site-footer {
       left: 0;
       right: 0;
@@ -136,6 +149,7 @@
   <div class="stage" id="stage">
     <div class="hero" id="hero"></div>
     <div class="vignette"></div>
+    <div class="hero-scrim" aria-hidden="true"></div>
     <div class="grain"></div>
     <div class="ui">
       <div class="chips">
@@ -144,7 +158,6 @@
         <span class="chip">EnkiLabs</span>
       </div>
     </div>
-    <div class="hint">Move · locked hero</div>
     <footer class="site-footer overlay">Built in Maine · EnkiLabs</footer>
   </div>
 
