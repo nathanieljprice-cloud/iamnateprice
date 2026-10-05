@@ -18,5 +18,5 @@ Then attach custom domain `iamnateprice.com` after Nate points Squarespace DNS.
 ## Pages
 - `index.html` — locked motion hero
 - `about.html` — Navy / Maine / EnkiLabs
-- `work.html` — Gambit + SteadyPulse
+- `work.html` — Gambit + Tallyback
 - `contact.html` — FormSubmit + mailto + LinkedIn
