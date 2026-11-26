@@ -1,4 +1,4 @@
-# Nate Price — Founder HQ prototype
+# Nate Price: Founder HQ prototype
 
 Static multi-page site for iamnateprice.com (hybrid: Squarespace domain + custom host).
 
@@ -16,7 +16,7 @@ npx vercel --yes
 Then attach custom domain `iamnateprice.com` after Nate points Squarespace DNS.
 
 ## Pages
-- `index.html` — locked motion hero
-- `about.html` — Navy / Maine / EnkiLabs
-- `work.html` — Gambit + Tallyback
-- `contact.html` — FormSubmit + mailto + LinkedIn
+- `index.html`: locked motion hero
+- `about.html`: Navy / Maine / EnkiLabs
+- `work.html`: Vektkey, Tallyback, Gambit
+- `contact.html`: FormSubmit + mailto + LinkedIn
